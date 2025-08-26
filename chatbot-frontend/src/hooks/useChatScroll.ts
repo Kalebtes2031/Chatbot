@@ -1,13 +1,12 @@
-// src/hooks/useChatScroll.ts
-import { useEffect } from "react";
-import type { RefObject } from "react";
+import { useEffect, useRef } from "react";
 import type { ChatMessage } from "../types/chat";
 
-export function useChatScroll(
-  dep: ChatMessage[],
-  bottomRef: RefObject<HTMLDivElement>
-) {
+export function useChatScroll(dep: ChatMessage[]) {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [dep, bottomRef]);
+  }, [dep]);
+
+  return bottomRef;
 }
