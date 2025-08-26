@@ -1,0 +1,16 @@
+
+# chatbot-frontend
+chatbot-frontend/node_modules/
+chatbot-frontend/dist/
+chatbot-frontend/build/
+chatbot-frontend/.env
+
+# backend
+backend/chatbot_backend/__pycache__/
+backend/chatbot_backend/*.pyc
+backend/chatbot_backend/env/
+backend/chatbot_backend/.env
+
+# VSCode / OS
+.vscode/
+.DS_Store
