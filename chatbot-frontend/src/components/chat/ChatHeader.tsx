@@ -21,7 +21,7 @@ const ChatHeader: React.FC = () => {
           </svg>
         </div>
         <div>
-          <h2 className="font-semibold text-lg">Professional Assistant</h2>
+          <h2 className="font-semibold text-lg">Kabth Assistant</h2>
           <div className="flex items-center">
             <span className="h-2 w-2 bg-green-400 rounded-full mr-1" />
             <span className="text-xs text-indigo-100">Online</span>
