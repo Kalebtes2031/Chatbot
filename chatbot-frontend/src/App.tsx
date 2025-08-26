@@ -1,4 +1,3 @@
-import Chatbot from "./Chatbot";
 import ChatPage from "./pages/ChatPage";
 import "./App.css";
 
