@@ -8,6 +8,7 @@ A professional AI chatbot web application built with **React (TypeScript)** fron
 
 - Real-time chat with AI using Hugging Face LLM
 - Supports **Markdown** formatting and code blocks
+- Maintains conversation context by sending the full message history to the backend for context-aware replies
 - Professional UI with:
   - Typing indicator
   - Multi-line input
@@ -87,13 +88,13 @@ Open your browser at [http://localhost:5173](http://localhost:5173) (or the Vite
 1. Type your message in the input box
 2. Press **Enter** or click the **send icon**
 3. The AI assistant responds with Markdown-rendered text
-4. You can copy code blocks using the **copy button**
+4. Continue the conversation — previous messages are remembered for context-aware replies
+5. You can copy code blocks using the **copy button**
 
 ---
 
 ## Future Improvements
 
-* **Multi-turn conversation:** Keep the chat context for more intelligent responses
 * **Streaming responses:** Show typing messages as the model generates responses
 * **Authentication & user sessions:** Personalized AI experience
 * **Deployment:** Docker or cloud hosting for production use
