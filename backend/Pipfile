@@ -11,6 +11,8 @@ python-decouple = "*"
 requests = "*"
 huggingface-hub = "*"
 django-cors-headers = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
