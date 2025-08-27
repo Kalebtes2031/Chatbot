@@ -1,48 +1,83 @@
 // src/components/chat/ChatHeader.tsx
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { 
+  Bars3Icon, 
+  XMarkIcon, 
+  UserCircleIcon 
+} from "@heroicons/react/24/outline";
 
-const ChatHeader: React.FC = () => {
+interface Props {
+  onMenuClick: () => void;
+  sidebarOpen: boolean;
+}
+
+const ChatHeader: React.FC<Props> = ({ onMenuClick, sidebarOpen }) => {
+  const { user, logout } = useContext(AuthContext);
+
   return (
-    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-      <div className="flex items-center space-x-3">
-        <div className="bg-white p-2 rounded-full">
-          <svg
-            className="w-6 h-6 text-indigo-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <div className="flex justify-between items-center p-4 md:px-6 bg-white border-b border-gray-100 shadow-sm">
+      <div className="flex items-center">
+        {user && (
+          <button 
+            onClick={onMenuClick}
+            className="mr-3 p-1.5 rounded-md hover:bg-gray-100 md:hidden"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"
-            />
-          </svg>
-        </div>
-        <div>
-          <h2 className="font-semibold text-lg">Kabth Assistant</h2>
-          <div className="flex items-center">
-            <span className="h-2 w-2 bg-green-400 rounded-full mr-1" />
-            <span className="text-xs text-indigo-100">Online</span>
-          </div>
-        </div>
+            {sidebarOpen ? (
+              <XMarkIcon className="h-5 w-5 text-gray-600" />
+            ) : (
+              <Bars3Icon className="h-5 w-5 text-gray-600" />
+            )}
+          </button>
+        )}
+        
+        <h1 className="text-xl font-bold text-slate-800 flex items-center">
+          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            ChatAssistant
+          </span>
+        </h1>
       </div>
-      <button className="text-indigo-100 hover:text-white" aria-label="Close">
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+
+      <div className="flex items-center space-x-2">
+        {user ? (
+          <>
+            <div className="hidden md:flex items-center mr-2 text-sm bg-blue-50 rounded-full py-1 pl-1 pr-3">
+              <UserCircleIcon className="h-6 w-6 text-blue-600 mr-1" />
+              <span className="text-slate-700">{user.username}</span>
+            </div>
+            
+            {/* <Link
+              to="/conversations"
+              className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition text-slate-700 hover:text-slate-900 hidden md:block"
+            >
+              My Conversations
+            </Link> */}
+            
+            <button
+              onClick={logout}
+              className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-lg hover:bg-red-50 transition text-red-600 hover:text-red-700"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="px-3 py-1.5 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition text-slate-700 hover:text-slate-900"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="px-3 py-1.5 text-sm bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition text-white shadow-sm"
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

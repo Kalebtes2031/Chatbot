@@ -4,18 +4,33 @@ import type { ChatMessage } from "../types/chat";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function useChatApi(messages: ChatMessage[]): Promise<string[]> {
+export async function useChatApi(
+  messages: ChatMessage[],
+  accessToken?: string,
+  conversationId?: number
+): Promise<{
+  replies: string[];
+  conversationId?: number;
+}> {
   try {
-    // Only send role and content
-    const payload = messages.map(({ role, content }) => ({ role, content }));
+    const payload = {
+      messages: messages.map(({ role, content }) => ({ role, content })),
+      conversation_id: conversationId,
+    };
 
-    const response = await axios.post(`${API_URL}/chathf/`, { messages: payload });
+    const headers: any = {};
+    if (accessToken) headers["Authorization"] = `Bearer ${accessToken}`;
 
-    if (Array.isArray(response.data.replies)) return response.data.replies;
-    if (response.data.reply && typeof response.data.reply === "object") return [response.data.reply.content || ""];
-    if (typeof response.data.reply === "string") return [response.data.reply];
+    const response = await axios.post(`${API_URL}/api/chathf/`, payload, {
+      headers,
+    });
 
-    return [JSON.stringify(response.data)];
+    return {
+      replies: Array.isArray(response.data.replies)
+        ? response.data.replies
+        : [],
+      conversationId: response.data.conversation_id,
+    };
   } catch (error: any) {
     console.error("Chat API Error:", error);
     throw new Error("Failed to fetch response from server");

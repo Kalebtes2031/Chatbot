@@ -29,8 +29,8 @@ const ChatInput: React.FC<Props> = ({ value, onChange, onSend, disabled }) => {
   };
 
   return (
-    <div className="border-t border-gray-200/50 p-4 bg-white/80 backdrop-blur-sm flex items-end">
-      <div className="flex-1 relative">
+    <div className="border-t border-gray-200/50 p-4 bg-white/80 backdrop-blur-sm flex  items-end">
+      <div className="flex-1 w-full relative shadow-lg shadow-gray-400 rounded-full">
         <textarea
           ref={textareaRef}
           value={value}
@@ -39,7 +39,7 @@ const ChatInput: React.FC<Props> = ({ value, onChange, onSend, disabled }) => {
           placeholder="Type your message..."
           disabled={disabled}
           rows={1}
-          className="w-full resize-none rounded-2xl border-0 bg-white/90 shadow-sm pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-100 disabled:cursor-not-allowed transition-all duration-300"
+          className="w-full ml-2 resize-none rounded-full border-0 bg-white/90 shadow-sm pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-100 disabled:cursor-not-allowed transition-all duration-300"
         />
         <button
           onClick={onSend}
