@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import ErrorBoundary from "../../components/ErrorBoundary";
+import { DocumentDuplicateIcon, CheckIcon } from "@heroicons/react/24/outline";
 import "highlight.js/styles/atom-one-dark.css";
 
 // Inline & block code renderer with a copy button for blocks
@@ -19,7 +20,7 @@ const Code: React.FC<{
   if (inline) {
     return (
       <code
-        className="px-1 py-0.5 rounded bg-gray-200 text-gray-800"
+        className="px-1.5 py-0.5 rounded bg-gray-600 text-gray-100 text-sm font-mono"
         {...props}
       >
         {children}
@@ -36,29 +37,34 @@ const Code: React.FC<{
   };
 
   return (
-    <div className="group relative">
-      <pre className="rounded-xl overflow-auto shadow-inner bg-gray-900 text-gray-100 p-4 text-sm">
+    <div className="group relative my-3">
+      <pre className="rounded-lg overflow-auto shadow-inner bg-gray-900 text-gray-100 p-4 text-sm font-mono border border-gray-700">
         <code className={className}>{children}</code>
       </pre>
       <button
         onClick={copy}
-        className="absolute top-2 right-2 text-xs px-2 py-1 rounded-md border bg-white/80 hover:bg-white shadow-sm backdrop-blur-sm"
+        className="absolute top-2 right-2 text-xs px-2 py-1.5 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white border border-gray-600 shadow-sm transition-all flex items-center"
         aria-label="Copy code"
       >
-        {copied ? "Copied" : "Copy"}
+        {copied ? (
+          <CheckIcon className="h-4 w-4 text-green-400" />
+        ) : (
+          <DocumentDuplicateIcon className="h-4 w-4" />
+        )}
       </button>
       {langMatch && (
-        <span className="absolute bottom-2 right-2 text-[10px] uppercase tracking-wider bg-black/50 text-white px-1.5 py-0.5 rounded">
+        <span className="absolute top-2 left-2 text-[10px] uppercase tracking-wider bg-gray-800 text-gray-400 px-2 py-0.5 rounded border border-gray-700">
           {langMatch[1]}
         </span>
       )}
     </div>
   );
 };
+
 const Markdown: React.FC<{ content: string }> = ({ content }) => {
   return (
     <ErrorBoundary>
-      <div className="whitespace-pre-wrap break-words prose prose-sm max-w-none prose-pre:p-0">
+      <div className="whitespace-pre-wrap break-words prose prose-invert prose-sm max-w-none prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700">
         <ReactMarkdown
           // Security: ignore raw HTML from model/back-end
           skipHtml
@@ -70,30 +76,44 @@ const Markdown: React.FC<{ content: string }> = ({ content }) => {
                 {...props}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 hover:underline"
+                className="text-blue-400 hover:text-blue-300 underline"
               />
             ),
             code: Code as any,
             ul: ({ node, ...props }) => (
-              <ul {...props} className="list-disc ml-5 space-y-1" />
+              <ul {...props} className="list-disc ml-5 space-y-1 my-3" />
             ),
             ol: ({ node, ...props }) => (
-              <ol {...props} className="list-decimal ml-5 space-y-1" />
+              <ol {...props} className="list-decimal ml-5 space-y-1 my-3" />
             ),
             p: ({ node, ...props }) => (
-              <p {...props} className="leading-relaxed" />
+              <p {...props} className="leading-relaxed my-2" />
             ),
             h1: ({ node, ...props }) => (
-              <h1 {...props} className="text-xl font-semibold mt-3 mb-1" />
+              <h1 {...props} className="text-xl font-semibold mt-4 mb-2 border-b border-gray-600 pb-1" />
             ),
             h2: ({ node, ...props }) => (
-              <h2 {...props} className="text-lg font-semibold mt-3 mb-1" />
+              <h2 {...props} className="text-lg font-semibold mt-4 mb-2 border-b border-gray-600 pb-1" />
+            ),
+            h3: ({ node, ...props }) => (
+              <h3 {...props} className="text-md font-semibold mt-3 mb-1" />
             ),
             blockquote: ({ node, ...props }) => (
               <blockquote
                 {...props}
-                className="border-l-4 border-gray-300 pl-3 italic text-gray-700"
+                className="border-l-4 border-purple-500 pl-4 italic text-gray-400 bg-gray-800/50 py-1 my-2 rounded-r"
               />
+            ),
+            table: ({ node, ...props }) => (
+              <div className="overflow-x-auto my-3">
+                <table {...props} className="min-w-full divide-y divide-gray-700" />
+              </div>
+            ),
+            th: ({ node, ...props }) => (
+              <th {...props} className="px-4 py-2 bg-gray-800 text-left text-xs font-medium text-gray-300 uppercase tracking-wider" />
+            ),
+            td: ({ node, ...props }) => (
+              <td {...props} className="px-4 py-2 whitespace-nowrap text-sm text-gray-300 border-t border-gray-700" />
             ),
           }}
         >

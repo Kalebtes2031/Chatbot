@@ -64,7 +64,7 @@ const ChatPage: React.FC = () => {
         time: m.created_at,
       }));
 
-      // ✅ replace old messages, don’t append
+      // ✅ replace old messages, don't append
       setMessages(messagesFromApi);
       setSidebarOpen(false);
     } catch (err) {
@@ -121,12 +121,11 @@ const ChatPage: React.FC = () => {
     }
   };
 
-
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-slate-50 to-blue-50/30 p-2 md:p-4">
+    <div className="h-screen flex bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-2 md:p-4">
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/20 z-20 md:hidden"
+          className="fixed inset-0 bg-black/40 z-20 md:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -141,14 +140,14 @@ const ChatPage: React.FC = () => {
         </div>
       )}
 
-      <div className="flex-1 flex flex-col min-h-full w-full">
-        <div className="flex flex-col h-full max-h-[800px] w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 mx-auto">
+      <div className="flex-1 flex flex-col h-full w-full">
+        <div className="flex flex-col h-full max-h-[800px] w-full max-w-4xl bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl overflow-hidden  mx-auto transform transition-all duration-300 hover:shadow-purple-500/10">
           <ChatHeader
             onMenuClick={() => setSidebarOpen(!sidebarOpen)}
             sidebarOpen={sidebarOpen}
           />
 
-          <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-white to-blue-50/20">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-gray-800/80 to-gray-900/80">
             <MessageList messages={messages} isTyping={loading} />
             <div ref={messagesEndRef} />
           </div>

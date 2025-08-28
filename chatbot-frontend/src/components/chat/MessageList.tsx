@@ -2,6 +2,7 @@
 import React from "react";
 import type { ChatMessage } from "../../types/chat";
 import TypingIndicator from "./TypingIndicator";
+import Markdown from "./Markdown";
 
 interface Props {
   messages: ChatMessage[];
@@ -10,16 +11,14 @@ interface Props {
 
 const MessageList: React.FC<Props> = ({ messages, isTyping }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 p-2">
       {messages.length === 0 && (
-        <div className="text-center py-10">
-          <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 mb-4">
-            <svg className="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
+        <div className="text-center py-12">
+          <div className="flex items-center justify-center w-full h-[180px] rounded-2xl mb-4">
+            <img src="/KABTHAILOGO.png" alt="Logo" className="h-full w-full object-cover" />
           </div>
-          <h3 className="text-lg font-medium text-slate-800 mb-1">Welcome to ChatAssistant</h3>
-          <p className="text-slate-500">Ask me anything, and I'll do my best to help you!</p>
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">Welcome to KABTH AI Assistant</h3>
+          <p className="text-gray-500 max-w-md mx-auto">Start a conversation by typing a message below. I'm here to help with any questions you might have!</p>
         </div>
       )}
       
@@ -29,14 +28,15 @@ const MessageList: React.FC<Props> = ({ messages, isTyping }) => {
           className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
         >
           <div
-            className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.role === "user"
-              ? "bg-blue-600 text-white rounded-br-none"
-              : "bg-gray-100 text-slate-800 rounded-bl-none"
+            className={`max-w-[85%] rounded-2xl px-5 py-4 shadow-lg ${message.role === "user"
+              ? "bg-gradient-to-r from-[#142d38] via-[#203a43] to-[#2c5364] text-white rounded-br-none"
+              : "bg-gray-700 text-gray-100 rounded-bl-none border border-gray-600"
             }`}
           >
-            <div className="whitespace-pre-wrap">{message.content}</div>
+            <Markdown content={message.content} />
+            
             <div
-              className={`text-xs mt-1 ${message.role === "user" ? "text-blue-200" : "text-gray-500"}`}
+              className={`text-xs mt-2 flex justify-end ${message.role === "user" ? "text-blue-200/80" : "text-gray-400"}`}
             >
               {new Date(message.time).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -49,7 +49,7 @@ const MessageList: React.FC<Props> = ({ messages, isTyping }) => {
       
       {isTyping && (
         <div className="flex justify-start">
-          <div className="max-w-[80%] rounded-2xl rounded-bl-none bg-gray-100 px-4 py-3">
+          <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-gray-700 px-5 py-4 border border-gray-600">
             <TypingIndicator />
           </div>
         </div>
