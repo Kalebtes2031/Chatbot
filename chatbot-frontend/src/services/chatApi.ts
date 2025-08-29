@@ -1,8 +1,6 @@
 // src/services/chatApi.ts
-import axios from "axios";
+import api from "./api";
 import type { ChatMessage } from "../types/chat";
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 export async function useChatApi(
   messages: ChatMessage[],
@@ -15,24 +13,29 @@ export async function useChatApi(
   try {
     const payload = {
       messages: messages.map(({ role, content }) => ({ role, content })),
-      conversation_id: conversationId,
+      conversation_id: conversationId ?? null, // 👈 explicit null
     };
 
-    const headers: any = {};
-    if (accessToken) headers["Authorization"] = `Bearer ${accessToken}`;
+    const headers: Record<string, string> = {};
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
+    }
 
-    const response = await axios.post(`${API_URL}/api/chathf/`, payload, {
-      headers,
-    });
+    const response = await api.post(`api/chathf/`, payload, { headers });
+
+    let replies: string[] = [];
+    if (Array.isArray(response.data.replies)) {
+      replies = response.data.replies;
+    } else if (typeof response.data.replies === "string") {
+      replies = [response.data.replies];
+    }
 
     return {
-      replies: Array.isArray(response.data.replies)
-        ? response.data.replies
-        : [],
-      conversationId: response.data.conversation_id,
+      replies,
+      conversationId: response.data.conversation_id ?? undefined,
     };
-  } catch (error: any) {
-    console.error("Chat API Error:", error);
+  } catch (error) {
+    console.error("❌ Chat API Error:", error);
     throw new Error("Failed to fetch response from server");
   }
 }
