@@ -10,6 +10,7 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,13 +76,31 @@ const LoginPage: React.FC = () => {
                 </svg>
               </div>
               <input
-                type="password"
+                type={visible ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-500 transition-all duration-300"
               />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <button
+                  type="button"
+                  onClick={() => setVisible(!visible)}
+                  className="text-gray-500 hover:text-gray-300 focus:outline-none"
+                >
+                  {visible ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10 3C5 3 1.73 7.11 1.07 10a9.96 9.96 0 0017.86 0C18.27 7.11 15 3 10 3zM10 15a5 5 0 110-10 5 5 0 010 10z" />
+                      <path d="M10 7a3 3 0 100 6 3 3 0 000-6z" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M3.707 2.293a1 1 0 00-1.414 1.414l1.261 1.261A9.953 9.953 0 001.07 10c.66 2.89 4.03 7.01 8.93 7.01a9.96 9.96 0 005.454-1.748l1.813 1.812a1 1 0 001.414-1.415l-16-16zM10.002 5a5.002 5.002 0 014.9 4H14a1 1 0 110 .002h-.098a5.002 5.002 0 01-3.9-4H10z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
           

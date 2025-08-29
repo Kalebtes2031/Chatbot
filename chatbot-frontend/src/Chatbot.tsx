@@ -29,7 +29,7 @@ const FormattedMessage: React.FC<{ content: string }> = ({ content }) => {
                 {language}
               </div>
             )}
-            <pre className={`bg-gray-900 text-gray-100 p-3 rounded-md overflow-x-auto text-sm font-mono ${
+            <pre className={`bg-gray-900 text-gray-100 p-3 rounded-md overflow-x-auto custom-scrollbar text-sm font-mono ${
               language ? 'rounded-t-none' : ''
             }`}>
               <code>{code}</code>
@@ -156,7 +156,7 @@ const Chatbot: React.FC = () => {
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+      <div className="flex-1 p-4 overflow-y-auto custom-scrollbar">
         {chat.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
             <div className="bg-indigo-100 p-5 rounded-full mb-4">

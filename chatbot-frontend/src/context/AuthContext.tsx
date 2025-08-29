@@ -1,7 +1,7 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState, useEffect } from "react";
-import axios from "axios";
 import type { User } from "../types/auth";
+import axios from 'axios';
 
 interface AuthContextType {
   user: User | null;
@@ -31,14 +31,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (username: string, password: string) => {
+    // ✅ Use backend auth endpoint
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/jwt/create/`, { username, password });
-    setAccessToken(response.data.access);
-    localStorage.setItem("accessToken", response.data.access);
 
-    // Fetch user profile
+    const access = response.data.access;
+    const refresh = response.data.refresh;
+
+    setAccessToken(access);
+    localStorage.setItem("accessToken", access);
+    localStorage.setItem("refreshToken", refresh); // ✅ save refresh token for later
+
+    // ✅ Fetch user profile
     const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/auth/users/me/`, {
-      headers: { Authorization: `Bearer ${response.data.access}` },
+      headers: { Authorization: `Bearer ${access}` },
     });
+
     setUser(userRes.data);
     localStorage.setItem("user", JSON.stringify(userRes.data));
   };
@@ -47,6 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
     setAccessToken(null);
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken"); // ✅ also remove refresh token
     localStorage.removeItem("user");
   };
 
