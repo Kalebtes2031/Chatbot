@@ -41,12 +41,12 @@ const ChatInput: React.FC<Props> = ({ value, onChange, onSend, disabled }) => {
             placeholder="Type your message..."
             disabled={disabled}
             rows={1}
-            className="flex-1 resize-none bg-transparent border-0 text-white placeholder-gray-500 focus:outline-none focus:ring-0 text-sm disabled:opacity-50"
+            className="flex-1 resize-none bg-transparent overflow-y-auto custom-scrollbar border-0 text-white placeholder-gray-500 focus:outline-none focus:ring-0 text-sm disabled:opacity-50"
           />
           <button
             onClick={onSend}
             disabled={disabled || !value.trim()}
-            className="ml-2 bg-gradient-to-r from-[#142d38] via-[#203a43] to-[#2c5364]  FFp-2 rounded-full text-white shadow-md border-1 hover:shadow-lg transform transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:transform-none disabled:hover:shadow-md"
+            className="ml-2 bg-gradient-to-r from-[#142d38] via-[#203a43] to-[#2c5364]  p-2 rounded-full text-white shadow-md border-1 hover:shadow-lg transform transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:transform-none disabled:hover:shadow-md"
             aria-label="Send message"
           >
             <PaperAirplaneIcon className="w-5 h-5" />
