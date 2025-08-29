@@ -15,6 +15,15 @@ openai.api_key = settings.OPENAI_API_KEY
 HF_API_KEY = settings.HF_API_KEY
 client = InferenceClient(api_key=HF_API_KEY)
 
+def generate_title_from_message(message: str) -> str:
+    """Generate a short title from the first user message"""
+    if not message:
+        return "New Conversation"
+    words = message.strip().split()
+    title = " ".join(words[:6])  # take first 6 words
+    return title + ("..." if len(words) > 6 else "")
+
+
 class HuggingFaceChatView(APIView):
     permission_classes = [AllowAny]
 
@@ -43,8 +52,10 @@ class HuggingFaceChatView(APIView):
                 except Conversation.DoesNotExist:
                     return Response({"error": "Conversation not found"}, status=status.HTTP_404_NOT_FOUND)
             else:
-                # Create a new conversation automatically
-                conversation = Conversation.objects.create(user=request.user)
+                # ✅ Create a new conversation with generated title
+                first_user_msg = user_messages[0].get("content", "") if user_messages else ""
+                title = generate_title_from_message(first_user_msg)
+                conversation = Conversation.objects.create(user=request.user, title=title)
 
         # Add current user messages
         messages_for_ai += [{"role": m["role"], "content": m["content"]} for m in user_messages]
