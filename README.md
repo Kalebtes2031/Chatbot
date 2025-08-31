@@ -99,7 +99,7 @@ npm run dev
 Update your `.env` in `chatbot-frontend`:
 
 ```env
-VITE_API_URL=http://127.0.0.1:8000/api
+VITE_API_URL=http://127.0.0.1:8000/
 ```
 
 Open your browser at [http://localhost:5173](http://localhost:5173) (or the Vite dev server port).
