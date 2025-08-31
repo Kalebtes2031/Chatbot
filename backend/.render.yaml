@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: chatbot-backend
+    env: python
+    plan: free
+    # rootDir must point to folder containing manage.py
+    rootDir: backend/chatbot_backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash -lc "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn chatbot_backend.wsgi:application --bind 0.0.0.0:$PORT"
+
+
