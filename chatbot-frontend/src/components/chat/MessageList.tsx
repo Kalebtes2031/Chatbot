@@ -15,7 +15,7 @@ const MessageList: React.FC<Props> = ({ messages, isTyping }) => {
       {messages.length === 0 && (
         <div className="text-center py-12">
           <div className="flex items-center justify-center w-full h-[180px] rounded-2xl mb-4">
-            <img src="/KABTHAILOGO.png" alt="Logo" className="h-full w-full object-cover" />
+            <img src="/KABTHAILOGO3.png" alt="Logo" className="h-full w-full object-cover" />
           </div>
           <h3 className="text-xl font-semibold text-gray-300 mb-2">Welcome to KABTH AI Assistant</h3>
           <p className="text-gray-500 max-w-md mx-auto">Start a conversation by typing a message below. I'm here to help with any questions you might have!</p>

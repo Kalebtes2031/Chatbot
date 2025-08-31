@@ -35,7 +35,7 @@ const ChatHeader: React.FC<Props> = ({ onMenuClick, sidebarOpen }) => {
         
         <div className="flex items-center justify-center rounded-xl sm:rounded-2xl">
           <img 
-            src="/KABTHAILOGO1.png" 
+            src="/KABTHAILOGO2.png" 
             alt="Logo" 
             className="h-6 sm:h-8 w-auto object-contain" 
           />
